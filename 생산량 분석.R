@@ -37,6 +37,7 @@ predict(model_w, newdata = data.frame(year = c(2019)), interval = "confidence")
 
 
 ##생산량 데이터###
+#모든 작물의 생산량은 을 단위로 한다.
 
 ##배추 데이터 파악하기
 chu<-read.csv(“bae.csv”, fileEncoding = "UTF-8") #배추 생산량 자료 불러오기
@@ -221,9 +222,3 @@ summary(gmodel)
 cor(go$rain,go$outcome,use="complete.obs") #상관계수가 0과 가까운 값을 가지므로 고추 생산량과 강수량은 유의미한 관계를 가진다고 할 수 없다.
 cor(go$sun,go$outcome,use="complete.obs") #상관계수 0과 가까운 값을 가지므로 고추 생산량과 일조량은 유의미한 관계를 가진다고 할 수 없다.
 #고추 생산량은 날씨 변수의, 강수량과 일조량의 영향을 받지 않는다. 따라서 날씨 변수를 통해 고추 생산량을 예측할 수 없다.
-
-
-
-
-
-
