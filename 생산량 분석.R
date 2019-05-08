@@ -1,5 +1,5 @@
 ###날씨 데이터###
-weather<-read.csv(“weather.csv” , fileEncoding = "UTF-8")
+weather<-read.csv("weather.csv" , fileEncoding = "UTF-8")
 weather
 weat<-weather[,-1]
 install.packages(“dplyr”)
@@ -37,10 +37,9 @@ predict(model_w, newdata = data.frame(year = c(2019)), interval = "confidence")
 
 
 ##생산량 데이터###
-#모든 작물의 생산량은 을 단위로 한다.
 
 ##배추 데이터 파악하기
-chu<-read.csv(“bae.csv”, fileEncoding = "UTF-8") #배추 생산량 자료 불러오기
+chu<-read.csv("bae.csv", fileEncoding = "UTF-8") #배추 생산량 자료 불러오기
 View(chu)
 be<-cbind(chu, weat) #날씨 데이터와 통합하여 하나의 데이터셋으로 만든다.
 be
@@ -54,7 +53,7 @@ summary(bmodel)
 
 #배추 생산량과 강수량의 선형회귀분석 모델
 cor(be$outcome, be$rain) #0에 가까운 값이므로 두 변수가 유의미한 관계를 가지지 않는다고 할 수 있다.
-bmodel_r=lm(outcome~rain, data=be)
+bmodel_r<-lm(outcome~rain, data=be)
 a=bmodel_r$coef[1]; b=bmodel_r$coef[2]
 a;b
 plot(be$rain, be$outcome, col="red")
@@ -78,7 +77,7 @@ anova(bmodel,bmodel_r) #p-value가 0.05보다 작다.
 #H0: bmodel=bmodel_s
 #H1: bmodel=/=bmodel_s
 anova(bmodel,bmodel_s) #p-value가 0.05보다 크다.
-#다중회귀모델과 강수량 관련 단순회귀모델은 같은 모델로 볼 수 있다.
+#다중회귀모델과 일조량 관련 단순회귀모델은 같은 모델로 볼 수 있다.
 
 #예측값과 신뢰구간 구하기
 View(bmodel_s)
@@ -88,7 +87,7 @@ predict(bmodel_s,newdata=data.frame(sun= c(202.675,214.9254)), interval = "confi
 
 
 ##무 데이터 파악하기
-mu<-read.csv(“moo.csv”, fileEncoding = "UTF-8")
+mu<-read.csv("moo.csv", fileEncoding = "UTF-8")
 View(mu)
 moo<-cbind(mu,weat) #날씨 데이터와 통합하여 하나의 데이터셋으로 만든다.
 moo
@@ -136,7 +135,7 @@ predict(mmodel_s, newdata = data.frame(sun= c(202.675,214.9254)), interval = "co
 
 
 ##마늘 생산량
-lic<-read.csv(“ma.csv”, fileEncoding = "UTF-8")
+lic<-read.csv("ma.csv", fileEncoding = "UTF-8")
 View(lic)
 ma<-cbind(lic,weat) #날씨 데이터와 통합하여 하나의 데이터셋으로 만든다.
 View(ma)
@@ -153,7 +152,7 @@ cor(ma$outcome, ma$rain)
 gmodel_r=lm(outcome~rain, data=ma)
 a=gmodel_r$coef[1]; b=gmodel_r$coef[2]
 a;b
-plot(ma$rain, ma$outcome)
+plot(ma$rain, ma$outcome, col="red")
 abline(a,b) #직선의 기울기가 0에 가까우므로 마늘 생산량과 강수량이 유의미한 관계를 가진다고 볼 수 없다.
 
 #마늘 생산량과 일조량의 선형회귀분석 모델
@@ -161,7 +160,7 @@ cor(ma$outcome, ma$sun)
 gmodel_s=lm(outcome~sun, data=ma)
 a=gmodel_s$coef[1]; b=gmodel_s$coefficients[2]
 a;b
-plot(ma$sun, ma$outcome)
+plot(ma$sun, ma$outcome, col="red")
 abline(a,b)
 
 #다중회귀모델과 단순회귀모델(강수량) 검정
@@ -215,10 +214,10 @@ qqline(go$outcome)
 #고추 생산량 데이터는 정규분포를 따르는 것을 알 수 있다.
 
 #고추 생산량- 강수량과 일조량 다중회귀
-gmodel<-lm(outcome~sun+rain, data=go)
-summary(gmodel)
+gomodel<-lm(outcome~sun+rain, data=go)
+summary(gomodel)
 
 #변수 별 상관계수 구하기
 cor(go$rain,go$outcome,use="complete.obs") #상관계수가 0과 가까운 값을 가지므로 고추 생산량과 강수량은 유의미한 관계를 가진다고 할 수 없다.
 cor(go$sun,go$outcome,use="complete.obs") #상관계수 0과 가까운 값을 가지므로 고추 생산량과 일조량은 유의미한 관계를 가진다고 할 수 없다.
-#고추 생산량은 날씨 변수의, 강수량과 일조량의 영향을 받지 않는다. 따라서 날씨 변수를 통해 고추 생산량을 예측할 수 없다.
+#고추 생산량은 날씨 변수의 강수량과 일조량의 영향을 받지 않는다. 따라서 날씨 변수를 통해 고추 생산량을 예측할 수 없다.
