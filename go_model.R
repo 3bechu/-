@@ -32,8 +32,8 @@ a=model_r$coef[1]; b=model_r$coef[2]
 abline(a,b) #기울기가 0에 가깝기 때문에 유의미한 관계라고 볼 수 없다.
 
 #변수 별 검정
-anova(model,model_r) #p-value가 1과 가까움
-anova(model,model_s) #p-value가 1과 가까움
+anova(model,model_r) #p-value가 0.05이상이므로 귀무가설 기각.
+anova(model,model_s) #p-value가 0.05이상이므로 귀무가설 기각.
 
 #예측하기
 predict(model_s,newdata=data.frame(weather$sun=))
